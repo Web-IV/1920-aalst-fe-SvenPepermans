@@ -14,6 +14,6 @@ export class PostDataService {
   }
 
   addNewPost(post: Post) {
-    this._posts.push(post);
+    this._posts = [...this._posts, post];
   }
 }
