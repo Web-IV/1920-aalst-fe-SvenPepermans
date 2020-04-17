@@ -1,0 +1,13 @@
+<mat-card>
+  <mat-form-field>
+    <input
+      matInput
+      placeholder="beschrijvijng"
+      type="test"
+      #newpostbeschrijving
+    />
+  </mat-form-field>
+  <button (click)="addPost(newpostbeschrijving)" mat-raised-button>
+    add post
+  </button>
+</mat-card>
