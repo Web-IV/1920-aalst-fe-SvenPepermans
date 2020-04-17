@@ -9,8 +9,12 @@ import { PostDataService } from '../post-data.service';
   styleUrls: ['./post-list.component.css']
 })
 export class PostListComponent implements OnInit {
-  private _posts = POSTS;
   constructor(private _postDataService: PostDataService) {}
+  public filterPostBeschrijving: string;
+
+  applyFilter(filter: string) {
+    this.filterPostBeschrijving = filter;
+  }
 
   ngOnInit(): void {}
   get posts() {
