@@ -1,5 +1,6 @@
+import { HttpClient, HttpEventType } from '@angular/common/http';
+
 import { Post } from './../post.model';
-import { Foto } from './../foto.model';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import {
   FormControl,
@@ -15,36 +16,54 @@ import {
 })
 export class AddPostComponent implements OnInit {
   public post: FormGroup;
-  selectedFile = null;
-  @Output() public newPost = new EventEmitter<Post>();
-  onFileSelected(event) {
-    console.log(event);
-    this.selectedFile = event.target.files[0];
-  }
+  public progress: number;
+  public message: string;
 
-  constructor(private fb: FormBuilder) {}
+  @Output() public newPost = new EventEmitter<Post>();
+
+  constructor(private fb: FormBuilder, private http: HttpClient) {}
 
   ngOnInit(): void {
     this.post = this.fb.group({
-      beschrijving: [
-        '' , [Validators.required, Validators.minLength(10) ]     
-      ],
-      categorie: ['', [Validators.required]], 
-      fotos: this.fb.array([ this.createFotos() ])
-      
+      beschrijving: ['', [Validators.required, Validators.minLength(10)]],
+      categorie: ['', [Validators.required]]
     });
   }
+  public uploadFile = files => {
+    if (files.length === 0) {
+      return;
+    }
+
+    let filesToUpload: File[] = files;
+    const formData = new FormData();
+
+    Array.from(filesToUpload).map((file, index) => {
+      return formData.append('file' + index, file, file.name);
+    });
+
+    this.http
+      .post('https://localhost:5001/api/Foto', formData, {
+        reportProgress: true,
+        observe: 'events'
+      })
+      .subscribe(event => {
+        if (event.type === HttpEventType.UploadProgress)
+          this.progress = Math.round((100 * event.loaded) / event.total);
+        else if (event.type === HttpEventType.Response) {
+          this.message = 'Upload success.';
+         
+        }
+      });
+  };
 
   onSubmit() {
-    let fotos = this.post.value.fotos.map(Foto.fromJSON);
-    this.newPost.emit(new Post(this.post.value.beschrijving, fotos, this.post.value.categorie));
-
     this.post = this.fb.group({
       beschrijving: ['', [Validators.required, Validators.minLength(10)]],
-      categorie: ['', [Validators.required]],
-      fotos: this.fb.array([this.createFotos()])
-
-    })
+      categorie: ['', [Validators.required]]
+    });
+    this.newPost.emit(
+      new Post(this.post.value.beschrijving, this.post.value.categorie)
+    );
   }
 
   getErrorMessage(errors: any): string {
@@ -53,11 +72,5 @@ export class AddPostComponent implements OnInit {
     } else if (errors.minlength) {
       return `needs at least ${errors.minlength.requiredLength} charactes (got ${errors.minlength.actualLength})`;
     }
-  }
-
-  createFotos(): FormGroup{
-    return this.fb.group({
-      foto: ['']
-    })
   }
 }

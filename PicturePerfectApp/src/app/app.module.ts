@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { PostModule } from './post/post.module';
 import { MaterialModule } from './material/material.module';
-import { MatFileUploadModule } from 'angular-material-fileupload';
 
 
 @NgModule({

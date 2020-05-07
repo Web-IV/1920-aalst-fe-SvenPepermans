@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Post } from '../post.model';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-post',
@@ -8,7 +9,11 @@ import { Post } from '../post.model';
 })
 export class PostComponent implements OnInit {
   @Input() public post: Post;
-  constructor() {}
+  constructor(private sanitizer:DomSanitizer) {}
 
   ngOnInit(): void {}
+
+  sanitize(url:string){
+    return this.sanitizer.bypassSecurityTrustUrl(url);
+}
 }

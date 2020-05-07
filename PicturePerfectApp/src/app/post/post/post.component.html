@@ -8,8 +8,7 @@
       <h3 mat-subheader>fotos</h3>
       <mat-list>
         <mat-list-item *ngFor="let foto of post.fotos">
-          <img src="{{ foto.url }}" height="200" width="400" />
-          
+          <img [src]="sanitize(foto.url)" height="200" width="400" />
         </mat-list-item>
       </mat-list>
     </mat-card-content>

@@ -1,30 +1,70 @@
+
 <mat-card>
   <mat-card-title>Add a post</mat-card-title>
   <mat-card-content>
     <form [formGroup]="post" (ngSubmit)="onSubmit()">
       <mat-form-field>
-        <input matInput aria-label="beschrijving" placeholder="beschrijving" type="text" formControlName="beschrijving"
-          required />
+        <input
+          matInput
+          aria-label="beschrijving"
+          placeholder="beschrijving"
+          type="text"
+          formControlName="beschrijving"
+          required
+        />
 
-        <mat-error *ngIf="post.get('beschrijving')['errors'] && post.get('beschrijving').touched">
+        <mat-error
+          *ngIf="
+            post.get('beschrijving')['errors'] &&
+            post.get('beschrijving').touched
+          "
+        >
           {{ getErrorMessage(post.get("beschrijving")["errors"]) }}
         </mat-error>
       </mat-form-field>
       <div>
-      <mat-form-field>
-        <input matInput aria-label="categorie" placeholder="categorie" type="text" formControlName="categorie" required />
+        <mat-form-field>
+          <input
+            mat-input
+            aria-label="categorie"
+            placeholder="categorie"
+            type="text"
+            formControlName="categorie"
+            required
+          />
 
-        <mat-error *ngIf="post.get('categorie')['errors'] && post.get('categorie').touched">
-          {{ getErrorMessage(post.get("categorie")["errors"]) }}
-        </mat-error>
-      </mat-form-field>
-    </div>
-      <div formArrayName="fotos" *ngFor="let item of post.get('fotos')['controls'];
-      let i = index">
-        <div [formGroupName]="i">
-          <mat-form-field>
-            <input type="file" aria-label="foto" formControlName="foto" />
-          </mat-form-field>
+          <mat-error
+            *ngIf="
+              post.get('categorie')['errors'] && post.get('categorie').touched
+            "
+          >
+            {{ getErrorMessage(post.get("categorie")["errors"]) }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div>
+        <div>
+          <input
+            
+          #file          
+          type="file"
+          (change)="uploadFile(file.files)"
+          multiple
+          hidden
+          />
+          <button
+            type="button"
+            class="mat-raised-button"
+            (click)="file.click()"
+          >
+            Upload file
+          </button>
+          <div>
+            <span class="upload" *ngIf="progress > 0"> {{ progress }}% </span>
+            <span class="upload" *ngIf="message">
+              {{ message }}
+            </span>
+          </div>
         </div>
       </div>
       <div>

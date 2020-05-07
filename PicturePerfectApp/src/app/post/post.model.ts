@@ -10,8 +10,8 @@ interface PostJson {
 export class Post {
   constructor(
     private _beschrijving: string,
-    private _fotos = new Array<Foto>(),
     private _categorie: string,
+    private _fotos = new Array<Foto>(),
     private _datePosted = new Date()
   ) {}
 
@@ -30,9 +30,9 @@ export class Post {
   }
   static fromJSON(json: PostJson): Post {
     const pos = new Post(
-      json.beschrijving,
-      json.fotos.map(Foto.fromJSON),
+      json.beschrijving,    
       json.categorie,
+      json.fotos.map(Foto.fromJSON),
       new Date(json.datePosted)
     );
     return pos;
