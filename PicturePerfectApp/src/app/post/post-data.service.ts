@@ -30,6 +30,23 @@ export class PostDataService {
     );
   }
 
+  getPost$(id: string): Observable<Post> {
+    return this.http.get(`${environment.apiUrl}/posts/${id}`).pipe(
+      catchError(this.handleError),
+      map(Post.fromJSON)
+    );
+  }
+
+  deletePost(post: Post){
+    return this.http
+    .delete(`${environment.apiUrl}/posts/${post.id}`)
+    .pipe(tap(console.log), catchError(this.handleError))
+    .subscribe(() => {
+      this._posts = this._posts.filter(pos => pos.id != post.id);
+      this._posts$.next(this._posts);
+    });
+  }
+
   handleError(err: any): Observable<never> {
     let errorMessage: string;
     if (err instanceof HttpErrorResponse) {

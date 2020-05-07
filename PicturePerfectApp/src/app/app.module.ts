@@ -13,19 +13,24 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { RouterModule, Routes } from '@angular/router';
-import { PostListComponent } from './post/post-list/post-list.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
-const appRoutes: Routes = [
-  { path: 'post/all', component: PostListComponent},
-  { path: 'post/add', component: AddPostComponent},
-  { path: '', redirectTo: 'post/all', pathMatch: 'full'},
-  { path: '**', component: PageNotFoundComponent}
-];
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [AppComponent, MainNavComponent, PageNotFoundComponent],
-  imports: [BrowserModule, PostModule, MaterialModule, LayoutModule, MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, RouterModule.forRoot(appRoutes)],
+  imports: [
+    BrowserModule,
+    PostModule,
+    MaterialModule,
+    LayoutModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule,
+    AppRoutingModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })
