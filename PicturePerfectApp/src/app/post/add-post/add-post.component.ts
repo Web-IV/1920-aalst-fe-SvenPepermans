@@ -8,6 +8,7 @@ import {
   FormBuilder,
   Validators
 } from '@angular/forms';
+import { PostDataService } from '../post-data.service';
 
 @Component({
   selector: 'app-add-post',
@@ -19,9 +20,11 @@ export class AddPostComponent implements OnInit {
   public progress: number;
   public message: string;
 
+  
+
   @Output() public newPost = new EventEmitter<Post>();
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {}
+  constructor(private fb: FormBuilder, private http: HttpClient, private _postDataService : PostDataService) {}
 
   ngOnInit(): void {
     this.post = this.fb.group({
@@ -61,7 +64,7 @@ export class AddPostComponent implements OnInit {
       beschrijving: ['', [Validators.required, Validators.minLength(10)]],
       categorie: ['', [Validators.required]]
     });
-    this.newPost.emit(
+    this._postDataService.addNewPost(
       new Post(this.post.value.beschrijving, this.post.value.categorie)
     );
   }
