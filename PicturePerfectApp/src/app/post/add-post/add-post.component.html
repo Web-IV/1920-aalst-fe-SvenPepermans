@@ -1,13 +1,37 @@
 <mat-card>
-  <mat-form-field>
-    <input
-      matInput
-      placeholder="beschrijvijng"
-      type="test"
-      #newpostbeschrijving
-    />
-  </mat-form-field>
-  <button (click)="addPost(newpostbeschrijving)" mat-raised-button>
-    add post
-  </button>
+  <mat-card-title>Add a post</mat-card-title>
+  <mat-card-content>
+    <form [formGroup]="post" (ngSubmit)="onSubmit()">
+      <mat-form-field>
+        <input matInput aria-label="beschrijving" placeholder="beschrijving" type="text" formControlName="beschrijving"
+          required />
+
+        <mat-error *ngIf="post.get('beschrijving')['errors'] && post.get('beschrijving').touched">
+          {{ getErrorMessage(post.get("beschrijving")["errors"]) }}
+        </mat-error>
+      </mat-form-field>
+      <div>
+      <mat-form-field>
+        <input matInput aria-label="categorie" placeholder="categorie" type="text" formControlName="categorie" required />
+
+        <mat-error *ngIf="post.get('categorie')['errors'] && post.get('categorie').touched">
+          {{ getErrorMessage(post.get("categorie")["errors"]) }}
+        </mat-error>
+      </mat-form-field>
+    </div>
+      <div formArrayName="fotos" *ngFor="let item of post.get('fotos')['controls'];
+      let i = index">
+        <div [formGroupName]="i">
+          <mat-form-field>
+            <input type="file" aria-label="foto" formControlName="foto" />
+          </mat-form-field>
+        </div>
+      </div>
+      <div>
+        <button type="submit" mat-raised-button [disabled]="!post.valid">
+          add post
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
 </mat-card>

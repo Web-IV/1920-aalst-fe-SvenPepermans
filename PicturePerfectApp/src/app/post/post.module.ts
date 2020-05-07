@@ -1,3 +1,4 @@
+import { ReactiveFormsModule } from '@angular/forms';
 import { PostFilterPipe } from './post-filter.pipe';
 import { MaterialModule } from './../material/material.module';
 import { PostComponent } from './post/post.component';
@@ -16,7 +17,7 @@ import { HttpClientModule } from '@angular/common/http';
     AddPostComponent,
     PostFilterPipe
   ],
-  imports: [CommonModule, MaterialModule, HttpClientModule],
+  imports: [CommonModule, MaterialModule, HttpClientModule, ReactiveFormsModule],
   exports: [PostListComponent]
 })
 export class PostModule {}
