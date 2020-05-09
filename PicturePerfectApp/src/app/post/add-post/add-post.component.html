@@ -1,4 +1,3 @@
-
 <mat-card>
   <mat-card-title>Add a post</mat-card-title>
   <mat-card-content>
@@ -25,7 +24,7 @@
       <div>
         <mat-form-field>
           <input
-            mat-input
+            matInput
             aria-label="categorie"
             placeholder="categorie"
             type="text"
@@ -44,14 +43,7 @@
       </div>
       <div>
         <div>
-          <input
-            
-          #file          
-          type="file"
-          (change)="uploadFile(file.files)"
-          multiple
-          hidden
-          />
+          <input #file type="file" formControlName="fotos" multiple hidden />
           <button
             type="button submit"
             class="mat-raised-button"
@@ -68,7 +60,11 @@
         </div>
       </div>
       <div>
-        <button type="submit" mat-raised-button >
+        <button
+          type="submit"
+          (click)="uploadFotos(file.files)"
+          mat-raised-button
+        >
           add post
         </button>
       </div>
