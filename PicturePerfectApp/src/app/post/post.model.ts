@@ -45,6 +45,7 @@ export class Post {
     return pos;
   }
 
+  
   toJSON(): PostJson {
     return <PostJson>{
       beschrijving: this.beschrijving,

@@ -20,10 +20,6 @@ export class AddPostComponent implements OnInit {
   public progress: number;
   public message: string;
 
-  
-
-  @Output() public newPost = new EventEmitter<Post>();
-
   constructor(private fb: FormBuilder, private http: HttpClient, private _postDataService : PostDataService) {}
 
   ngOnInit(): void {
@@ -56,7 +52,7 @@ export class AddPostComponent implements OnInit {
           this.message = 'Upload success.';
          
         }
-      });
+      });    
   };
 
   onSubmit() {
@@ -64,9 +60,13 @@ export class AddPostComponent implements OnInit {
       beschrijving: ['', [Validators.required, Validators.minLength(10)]],
       categorie: ['', [Validators.required]]
     });
+    var newPost =  new Post(this.post.value.beschrijving, this.post.value.categorie)
     this._postDataService.addNewPost(
-      new Post(this.post.value.beschrijving, this.post.value.categorie)
+     newPost
+     
     );
+    
+    
   }
 
   getErrorMessage(errors: any): string {
@@ -76,4 +76,6 @@ export class AddPostComponent implements OnInit {
       return `needs at least ${errors.minlength.requiredLength} charactes (got ${errors.minlength.actualLength})`;
     }
   }
+
+
 }

@@ -10,15 +10,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { LayoutModule } from '@angular/cdk/layout';
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
+    BrowserAnimationsModule,
     FlexLayoutModule,
     MatListModule,
     MatCardModule,
@@ -27,15 +24,10 @@ import { LayoutModule } from '@angular/cdk/layout';
     MatInputModule,
     MatProgressSpinnerModule,
     MatOptionModule,
-    MatSelectModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatListModule,
-    LayoutModule
+    MatSelectModule
   ],
   exports: [
+    BrowserAnimationsModule,
     FlexLayoutModule,
     MatListModule,
     MatCardModule,
@@ -44,13 +36,7 @@ import { LayoutModule } from '@angular/cdk/layout';
     MatInputModule,
     MatProgressSpinnerModule,
     MatOptionModule,
-    MatSelectModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatListModule,
-    LayoutModule
+    MatSelectModule
   ]
 })
 export class MaterialModule {}

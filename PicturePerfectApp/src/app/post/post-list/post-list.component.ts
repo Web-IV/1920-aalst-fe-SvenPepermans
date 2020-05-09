@@ -52,4 +52,5 @@ export class PostListComponent implements OnInit {
   get posts$(): Observable<Post[]> {
     return this._fetchPosts$;
   }
+
 }

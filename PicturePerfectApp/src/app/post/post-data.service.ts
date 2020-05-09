@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError, of, BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Foto } from './foto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +38,12 @@ export class PostDataService {
     );
   }
 
+  getFoto$(id: string): Observable<Foto>{
+    return this.http.get(`${environment.apiUrl}/fotos/${id}`).pipe(
+      catchError(this.handleError),
+      map(Foto.fromJSON)
+    );
+  }
   deletePost(post: Post){
     return this.http
     .delete(`${environment.apiUrl}/posts/${post.id}`)
