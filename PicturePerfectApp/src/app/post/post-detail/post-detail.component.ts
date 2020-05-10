@@ -1,6 +1,6 @@
 import { PostDataService } from '../post-data.service';
 import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Post } from '../post.model';
 
 @Component({
@@ -16,10 +16,6 @@ export class PostDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(pa =>
-      this.postDataService
-        .getPost$(pa.get('id'))
-        .subscribe(item => (this.post = item))
-    );
+  this.route.data.subscribe(item => this.post = item['post'])
   }
 }
