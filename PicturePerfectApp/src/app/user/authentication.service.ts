@@ -66,20 +66,22 @@ export class AuthenticationService {
   }
 
   register(
+    username: string,
+    email: string,
     firstname: string,
     lastname: string,
-    email: string,
+    
     password: string,
-    username: string
+    
   ): Observable<boolean> {
     return this.http
       .post(
         `${environment.apiUrl}/account/register`,
         {
+          username,
+          email,
           firstname,
           lastname,
-          email,
-          username,
           password,
           passwordConfirmation: password
         },
@@ -89,7 +91,7 @@ export class AuthenticationService {
         map(token => {
           if (token) {
             localStorage.setItem(this._tokenKey, token);
-            this._user$.next(email);
+            this._user$.next(username);
             return true;
           } else {
             return false;
@@ -105,11 +107,11 @@ export class AuthenticationService {
     }
   }
 
-  checkUserNameAvailability = (username: string): Observable<boolean> => {
+  checkUserNameAvailability = (email: string): Observable<boolean> => {
     return this.http.get<boolean>(
       `${environment.apiUrl}/account/checkusername`,
       {
-        params: { username }
+        params: { email }
       }
     );
   };

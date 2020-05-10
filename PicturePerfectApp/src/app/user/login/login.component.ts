@@ -28,14 +28,14 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.fb.group({
-      username: ['', Validators.required],
+      gebruikersnaam: ['', Validators.required],
       password: ['', Validators.required],
     });
   }
 
   onSubmit() {
     this.authService
-      .login(this.user.value.username, this.user.value.password)
+      .login(this.user.value.gebruikersnaam, this.user.value.password)
       .subscribe(
         (val) => {
           if (val) {
@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
               this.router.navigateByUrl(this.authService.redirectUrl);
               this.authService.redirectUrl = undefined;
             } else {
-              this.router.navigate(['/post/home']);
+              this.router.navigate(['/home']);
             }
           } else {
             this.errorMessage = `Could not login`;

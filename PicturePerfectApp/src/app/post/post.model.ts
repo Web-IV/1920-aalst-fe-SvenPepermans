@@ -4,7 +4,7 @@ interface PostJson {
   id: number;
   beschrijving: string;
   fotos: FotoJson[];
-  categorie: string;
+  categorieNaam: string;
   datePosted: string;
 }
 
@@ -12,7 +12,7 @@ export class Post {
   private _id: number;
   constructor(
     private _beschrijving: string,
-    private _categorie: string,
+    private _categorieNaam: string,
     private _fotos = new Array<Foto>(),
     private _datePosted = new Date()
   ) {}
@@ -27,8 +27,8 @@ export class Post {
     return this._datePosted;
   }
 
-  get categorie(): string {
-    return this._categorie;
+  get categorieNaam(): string {
+    return this._categorieNaam;
   }
 
   get id(): number {
@@ -37,7 +37,7 @@ export class Post {
   static fromJSON(json: PostJson): Post {
     const pos = new Post(
       json.beschrijving,
-      json.categorie,
+      json.categorieNaam,
       json.fotos.map(Foto.fromJSON),
       new Date(json.datePosted)
     );
@@ -45,12 +45,11 @@ export class Post {
     return pos;
   }
 
-  
   toJSON(): PostJson {
     return <PostJson>{
       beschrijving: this.beschrijving,
       fotos: this.fotos.map(fot => fot.toJSON()),
-      categorie: this.categorie,
+      categorieNaam: this.categorieNaam,
       datePosted: this.datePosted.toString()
     };
   }

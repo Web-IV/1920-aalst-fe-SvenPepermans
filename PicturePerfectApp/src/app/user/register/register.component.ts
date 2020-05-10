@@ -111,11 +111,12 @@ public errorMessage: string = '';
   onSubmit() {
     this.authService
       .register(
+        this.user.value.username,
+        this.user.value.email,
         this.user.value.firstname,
         this.user.value.lastname,
-        this.user.value.email,
         this.user.value.passwordGroup.password,
-        this.user.value.username
+        
       )
       .subscribe(
         (val) => {
@@ -124,7 +125,7 @@ public errorMessage: string = '';
               this.router.navigateByUrl(this.authService.redirectUrl);
               this.authService.redirectUrl = undefined;
             } else {
-              this.router.navigate(['/recipe/list']);
+              this.router.navigate(['/home']);
             }
           } else {
             this.errorMessage = `Could not login`;

@@ -25,26 +25,27 @@
         <mat-form-field>
           <input
             matInput
-            aria-label="categorie"
+            aria-label="categorieNaam"
             placeholder="categorie"
             type="text"
-            formControlName="categorie"
+            formControlName="categorieNaam"
             required
           />
 
           <mat-error
             *ngIf="
-              post.get('categorie')['errors'] && post.get('categorie').touched
+              post.get('categorieNaam')['errors'] &&
+              post.get('categorieNaam').touched
             "
           >
-            {{ getErrorMessage(post.get("categorie")["errors"]) }}
+            {{ getErrorMessage(post.get("categorieNaam")["errors"]) }}
           </mat-error>
         </mat-form-field>
       </div>
       <div>
         <div>
           <input #file type="file" formControlName="fotos" multiple hidden />
-          <button         
+          <button
             type="button"
             class="mat-raised-button"
             (click)="file.click()"
@@ -60,11 +61,7 @@
         </div>
       </div>
       <div>
-        <button
-          type="submit"
-          (click)="uploadFotos(file.files)"
-          mat-raised-button
-        >
+        <button type="submit" mat-raised-button>
           Create post
         </button>
       </div>

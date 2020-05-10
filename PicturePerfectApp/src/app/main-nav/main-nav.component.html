@@ -20,8 +20,10 @@
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <span>PicturePerfectApp</span>
-      <span *ngIf="loggedInUser$ | async as user; else loginTemplate"><
-        {{ user }}/span>
+      <span class="fill-space"></span>
+      <span *ngIf="loggedInUser$ | async as user; else loginTemplate">
+        {{ user }}
+      
         <button (click)="logout()" mat-flat-button>
           logout
         </button>

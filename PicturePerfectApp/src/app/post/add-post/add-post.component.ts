@@ -1,6 +1,6 @@
+import { environment } from 'src/environments/environment';
 import { Foto } from './../foto.model';
 import { HttpClient, HttpEventType } from '@angular/common/http';
-
 import { Post } from './../post.model';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import {
@@ -12,6 +12,7 @@ import {
 } from '@angular/forms';
 import { PostDataService } from '../post-data.service';
 import { distinctUntilChanged } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-add-post',
@@ -37,23 +38,25 @@ export class AddPostComponent implements OnInit {
   ngOnInit(): void {
     this.post = this.fb.group({
       beschrijving: ['', [Validators.required, Validators.minLength(2)]],
-      categorie: ['', [Validators.required]],
+      categorieNaam: ['', [Validators.required]],
       fotos: this.fb.array([this.createFotos()])
     });
 
+  
     this.fotos.valueChanges.pipe(distinctUntilChanged()).subscribe(fList => {
-      this.fotos.push(this.createFotos());
+    this.fotos.push(this.createFotos());
     });
+    
   }
 
   onSubmit() {
     let fotos = this.post.value.fotos.map(Foto.fromJSON);
     this._postDataService.addNewPost(
-      new Post(this.post.value.beschrijving, this.post.value.categorie, fotos)
+      new Post(this.post.value.beschrijving, this.post.value.categorieNaam )
     );
     this.post = this.fb.group({
       beschrijving: ['', [Validators.required, Validators.minLength(2)]],
-      categorie: ['', [Validators.required]],
+      categorieNaam: ['', [Validators.required]],
       fotos: this.fb.array([this.createFotos()])
     });
   }
@@ -81,12 +84,11 @@ export class AddPostComponent implements OnInit {
     const formData = new FormData();
 
     Array.from(filesToUpload).map((file, index) => {
-      
       return formData.append('file' + index, file, file.name);
     });
 
     this.http
-      .post('https://localhost:5001/api/Foto', formData, {
+      .post(`${environment.apiUrl}/foto/`, formData, {
         reportProgress: true,
         observe: 'events'
       })

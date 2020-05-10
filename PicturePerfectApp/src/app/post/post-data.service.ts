@@ -66,6 +66,7 @@ export class PostDataService {
   }
 
   addNewPost(post: Post) {
+    console.log(post)
     return this.http
       .post(`${environment.apiUrl}/posts/`, post.toJSON())
       .pipe(
