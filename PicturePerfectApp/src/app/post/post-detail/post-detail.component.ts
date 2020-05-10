@@ -11,8 +11,7 @@ import { Post } from '../post.model';
 export class PostDetailComponent implements OnInit {
   public post: Post;
   constructor(
-    private route: ActivatedRoute,
-    private postDataService: PostDataService
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {

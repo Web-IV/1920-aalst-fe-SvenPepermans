@@ -1,3 +1,4 @@
+
 import { Routes, RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PostFilterPipe } from './post-filter.pipe';
@@ -8,10 +9,14 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PostListComponent } from './post-list/post-list.component';
 import { AddPostComponent } from './add-post/add-post.component';
-import { HttpClientModule } from '@angular/common/http';
 import { PostDetailComponent } from './post-detail/post-detail.component';
+import { PostResolver } from './PostResolver';
 
-
+const postRoutes: Routes = [
+  { path: 'home', component: PostListComponent },
+  { path: 'add', component: AddPostComponent },
+  { path: 'detail/:id', component: PostDetailComponent, resolve: {post: PostResolver} }
+]
 
 @NgModule({
   declarations: [
@@ -26,8 +31,8 @@ import { PostDetailComponent } from './post-detail/post-detail.component';
   imports: [
     CommonModule,
     MaterialModule,
-    HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule.forChild(postRoutes)
   ],
   exports: [AddPostComponent, PostListComponent]
 })

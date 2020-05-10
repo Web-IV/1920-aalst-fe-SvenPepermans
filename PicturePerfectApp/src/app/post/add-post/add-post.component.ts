@@ -68,6 +68,10 @@ export class AddPostComponent implements OnInit {
 
   createFotos(): FormGroup {
     //////////Foto omzetten naar klasse//////////
+    this.returnData = this.fb.group({
+      name: [''],
+      url: ['']
+    });
     return this.returnData;
   }
 
@@ -77,10 +81,7 @@ export class AddPostComponent implements OnInit {
     const formData = new FormData();
 
     Array.from(filesToUpload).map((file, index) => {
-      this.returnData = this.fb.group({
-        name: [file.name],
-        url: ['een url']
-      });
+      
       return formData.append('file' + index, file, file.name);
     });
 

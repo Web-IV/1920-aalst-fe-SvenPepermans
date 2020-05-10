@@ -1,37 +1,31 @@
-import { PostResolver } from './post/PostResolver';
-import { MatInputModule } from '@angular/material/input';
-import { PostDetailComponent } from './post/post-detail/post-detail.component';
-import { PostListComponent } from './post/post-list/post-list.component';
-import { AddPostComponent } from './post/add-post/add-post.component';
+import { httpInterceptorProviders } from './http-interceptors/index';
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
-import { PostModule } from './post/post.module';
 import { MaterialModule } from './material/material.module';
 import { LayoutModule } from '@angular/cdk/layout';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, PreloadAllModules } from '@angular/router';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { MainNavComponent } from './main-nav/main-nav.component';
+import { UserModule } from './user/user.module';
+import { AppRoutingModule } from './app-routing.module';
 
 
-const appRoutes: Routes = [
-  { path: 'post/home', component: PostListComponent },
-  { path: 'post/add', component: AddPostComponent },
-  { path: 'post/detail/:id', component: PostDetailComponent, resolve: {post: PostResolver} },
-  { path: '', redirectTo: 'post/all', pathMatch: 'full' },
-  { path: '**', component: PageNotFoundComponent }
-];
 
 @NgModule({
   declarations: [AppComponent, PageNotFoundComponent, MainNavComponent],
   imports: [
+    BrowserAnimationsModule,
     BrowserModule,
-    PostModule,
     MaterialModule,
+    HttpClientModule,
     LayoutModule,
-    RouterModule.forRoot(appRoutes)
+    UserModule,
+    AppRoutingModule
   ],
-  providers: [],
+  providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

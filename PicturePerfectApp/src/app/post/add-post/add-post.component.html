@@ -44,8 +44,8 @@
       <div>
         <div>
           <input #file type="file" formControlName="fotos" multiple hidden />
-          <button
-            type="button submit"
+          <button         
+            type="button"
             class="mat-raised-button"
             (click)="file.click()"
           >
@@ -65,7 +65,7 @@
           (click)="uploadFotos(file.files)"
           mat-raised-button
         >
-          add post
+          Create post
         </button>
       </div>
     </form>
