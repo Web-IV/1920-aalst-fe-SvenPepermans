@@ -1,3 +1,4 @@
+import { AuthenticationService } from './../../user/authentication.service';
 import { environment } from 'src/environments/environment';
 import { Foto } from './../foto.model';
 import { HttpClient, HttpEventType } from '@angular/common/http';
@@ -12,7 +13,7 @@ import {
 } from '@angular/forms';
 import { PostDataService } from '../post-data.service';
 import { distinctUntilChanged } from 'rxjs/operators';
-
+import { UserDataService } from '../../user/user-data.service';
 
 @Component({
   selector: 'app-add-post',
@@ -24,11 +25,13 @@ export class AddPostComponent implements OnInit {
   public progress: number;
   public message: string;
   public returnData: FormGroup;
+  public auth: AuthenticationService;
 
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
-    private _postDataService: PostDataService
+    private _postDataService: PostDataService,
+    private _userDataService: UserDataService
   ) {}
 
   get fotos(): FormArray {
@@ -42,17 +45,15 @@ export class AddPostComponent implements OnInit {
       fotos: this.fb.array([this.createFotos()])
     });
 
-  
     this.fotos.valueChanges.pipe(distinctUntilChanged()).subscribe(fList => {
-    this.fotos.push(this.createFotos());
+      this.fotos.push(this.createFotos());
     });
-    
   }
 
   onSubmit() {
     let fotos = this.post.value.fotos.map(Foto.fromJSON);
     this._postDataService.addNewPost(
-      new Post(this.post.value.beschrijving, this.post.value.categorieNaam )
+      new Post(this.post.value.beschrijving, this.post.value.categorieNaam)
     );
     this.post = this.fb.group({
       beschrijving: ['', [Validators.required, Validators.minLength(2)]],

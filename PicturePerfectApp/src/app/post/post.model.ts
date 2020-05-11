@@ -1,4 +1,5 @@
 import { Foto, FotoJson } from './foto.model';
+import { User } from '../user/user.model';
 
 interface PostJson {
   id: number;
@@ -6,16 +7,23 @@ interface PostJson {
   fotos: FotoJson[];
   categorieNaam: string;
   datePosted: string;
+  gebruiker: User;
 }
 
 export class Post {
   private _id: number;
   constructor(
+   // private _gebruiker: User,
     private _beschrijving: string,
     private _categorieNaam: string,
     private _fotos = new Array<Foto>(),
     private _datePosted = new Date()
+    
   ) {}
+
+/*get gebruiker(): User{
+  return this._gebruiker;
+}*/
 
   get beschrijving(): string {
     return this._beschrijving;
@@ -36,10 +44,12 @@ export class Post {
   }
   static fromJSON(json: PostJson): Post {
     const pos = new Post(
+      //json.gebruiker,
       json.beschrijving,
       json.categorieNaam,
       json.fotos.map(Foto.fromJSON),
-      new Date(json.datePosted)
+      new Date(json.datePosted),
+      
     );
     pos._id = json.id;
     return pos;
@@ -50,7 +60,8 @@ export class Post {
       beschrijving: this.beschrijving,
       fotos: this.fotos.map(fot => fot.toJSON()),
       categorieNaam: this.categorieNaam,
-      datePosted: this.datePosted.toString()
+      datePosted: this.datePosted.toString(),
+     // gebruiker: this.gebruiker
     };
   }
 }
