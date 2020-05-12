@@ -2,7 +2,7 @@ import { Foto, FotoJson } from './foto.model';
 import { User } from '../user/user.model';
 
 interface PostJson {
-  id: number;
+  postId: number;
   beschrijving: string;
   fotos: FotoJson[];
   categorieNaam: string;
@@ -11,7 +11,7 @@ interface PostJson {
 }
 
 export class Post {
-  private _id: number;
+  private _PostId: number;
   constructor(
     private _gebruiker: User,
     private _beschrijving: string,
@@ -39,8 +39,8 @@ get gebruiker(): User{
     return this._categorieNaam;
   }
 
-  get id(): number {
-    return this._id;
+  get PostId(): number {
+    return this._PostId;
   }
   static fromJSON(json: PostJson): Post {
     const pos = new Post(
@@ -51,7 +51,7 @@ get gebruiker(): User{
       new Date(json.datePosted),
       
     );
-    pos._id = json.id;
+    pos._PostId = json.postId;
     return pos;
   }
 

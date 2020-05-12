@@ -46,10 +46,10 @@ export class PostDataService {
   }
   deletePost(post: Post){
     return this.http
-    .delete(`${environment.apiUrl}/posts/${post.id}`)
+    .delete(`${environment.apiUrl}/posts/${post.PostId}`)
     .pipe(tap(console.log), catchError(this.handleError))
     .subscribe(() => {
-      this._posts = this._posts.filter(pos => pos.id != post.id);
+      this._posts = this._posts.filter(pos => pos.PostId != post.PostId);
       this._posts$.next(this._posts);
     });
   }
