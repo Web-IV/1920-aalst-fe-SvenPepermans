@@ -5,39 +5,41 @@ import {
   FormBuilder,
   ValidatorFn,
   AbstractControl,
-  ValidationErrors,
+  ValidationErrors
 } from '@angular/forms';
 import { AuthenticationService } from '../authentication.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
-function patternValidator(regex: RegExp, error: ValidationErrors): ValidatorFn{
-return (control: AbstractControl): ValidationErrors => {
-  if(!control.value){
-    return null;
-  }
-  const valid = regex.test(control.value);
-  return valid ? null : error;
-}
+function patternValidator(regex: RegExp, error: ValidationErrors): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors => {
+    if (!control.value) {
+      return null;
+    }
+    const valid = regex.test(control.value);
+    return valid ? null : error;
+  };
 }
 
-function comparePassword(control: AbstractControl): ValidationErrors{
+function comparePassword(control: AbstractControl): ValidationErrors {
   const password = control.get('password');
   const confirmPassword = control.get('confirmPassword');
-  return password.value === confirmPassword.value ? null : {passwordsDiffer: true};
+  return password.value === confirmPassword.value
+    ? null
+    : { passwordsDiffer: true };
 }
 
 function serverSideValidateUsername(
   checkAvailabilityFn: (n: string) => Observable<boolean>
-): ValidatorFn{
-  return(control: AbstractControl): Observable<ValidationErrors> => {
+): ValidatorFn {
+  return (control: AbstractControl): Observable<ValidationErrors> => {
     return checkAvailabilityFn(control.value).pipe(
-      map((available) => {
+      map(available => {
         if (available) {
           return null;
         }
-        return {userAlreadyExists: true};
+        return { userAlreadyExists: true };
       })
     );
   };
@@ -49,39 +51,40 @@ function serverSideValidateUsername(
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-public user: FormGroup;
-public errorMessage: string = '';
+  public user: FormGroup;
+  public errorMessage: string = '';
   constructor(
-    private fb: FormBuilder, 
+    private fb: FormBuilder,
     private authService: AuthenticationService,
-    private router: Router) { }
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.user = this.fb.group({
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
-      email: ['', 
-      [Validators.required, Validators.email]
-     ,
-    ],
-    username: ['', [Validators.required],
-    serverSideValidateUsername(this.authService.checkUserNameAvailability),
-  ],
-  passwordGroup: this.fb.group({
-    pasword: [
-      '',
-       [
-         Validators.required,
-          Validators.minLength(8),
-           patternValidator(/\d/, {hasNumber: true}),
-           patternValidator(/[A-Z]/, {hasUpperCase: true}),
-           patternValidator(/[a-z]/, {hasLowerCase: true}),
+      email: ['', [Validators.required, Validators.email]],
+      username: [
+        '',
+        [Validators.required],
+        serverSideValidateUsername(this.authService.checkUserNameAvailability)
+      ],
+      passwordGroup: this.fb.group(
+        {
+          password: [
+            '',
+            [
+              Validators.required,
+              Validators.minLength(8),
+              patternValidator(/\d/, { hasNumber: true }),
+              patternValidator(/[A-Z]/, { hasUpperCase: true }),
+              patternValidator(/[a-z]/, { hasLowerCase: true })
+            ]
           ],
-        ],
-        confirmPassword: ['', Validators.required],
-  },
-  {Validator: comparePassword}
-  ),
+          confirmPassword: ['', Validators.required]
+        },
+        { Validator: comparePassword }
+      )
     });
   }
 
@@ -115,17 +118,16 @@ public errorMessage: string = '';
         this.user.value.email,
         this.user.value.firstname,
         this.user.value.lastname,
-        this.user.value.passwordGroup.password,
-        
+        this.user.value.passwordGroup.password
       )
       .subscribe(
-        (val) => {
+        val => {
           if (val) {
             if (this.authService.redirectUrl) {
               this.router.navigateByUrl(this.authService.redirectUrl);
               this.authService.redirectUrl = undefined;
             } else {
-              this.router.navigate(['/home']);
+              this.router.navigate(['post/home']);
             }
           } else {
             this.errorMessage = `Could not login`;
@@ -141,5 +143,4 @@ public errorMessage: string = '';
         }
       );
   }
-
 }

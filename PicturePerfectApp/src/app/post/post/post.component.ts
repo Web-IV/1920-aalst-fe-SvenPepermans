@@ -10,11 +10,16 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class PostComponent implements OnInit {
   @Input() public post: Post;
-  constructor(private sanitizer:DomSanitizer, private _postDataService: PostDataService) {}
+  constructor(private sanitizer:DomSanitizer, private _postDataService: PostDataService) {
+    
+  }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this.post);
+  }
 
   sanitize(url:string){
+    
     return this.sanitizer.bypassSecurityTrustUrl(url);
 }
   deletePost(){

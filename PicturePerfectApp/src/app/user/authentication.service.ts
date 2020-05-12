@@ -107,11 +107,11 @@ export class AuthenticationService {
     }
   }
 
-  checkUserNameAvailability = (email: string): Observable<boolean> => {
+  checkUserNameAvailability = (username: string): Observable<boolean> => {
     return this.http.get<boolean>(
       `${environment.apiUrl}/account/checkusername`,
       {
-        params: { email }
+        params: { username }
       }
     );
   };

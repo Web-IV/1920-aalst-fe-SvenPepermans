@@ -6,7 +6,8 @@
     >
   </mat-card-header>
   <mat-card-content>
-    <h3 mat-subheader>fotos</h3>
+    {{ post.beschrijving }}
+    <h3 mat-subheader></h3>
     <mat-list>
       <mat-list-item *ngFor="let foto of post.fotos">
         <img [src]="sanitize(foto.url)" height="50" width="50" />

@@ -14,6 +14,8 @@ import {
 import { PostDataService } from '../post-data.service';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { UserDataService } from '../../user/user-data.service';
+import { User } from '../../user/user.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-add-post',
@@ -52,14 +54,19 @@ export class AddPostComponent implements OnInit {
 
   onSubmit() {
     let fotos = this.post.value.fotos.map(Foto.fromJSON);
-    this._postDataService.addNewPost(
-      new Post(this.post.value.beschrijving, this.post.value.categorieNaam)
-    );
-    this.post = this.fb.group({
-      beschrijving: ['', [Validators.required, Validators.minLength(2)]],
-      categorieNaam: ['', [Validators.required]],
-      fotos: this.fb.array([this.createFotos()])
+    this._userDataService.getCurrentUser$().subscribe(user => {
+      this._postDataService.addNewPost(
+        new Post(user, this.post.value.beschrijving, this.post.value.categorieNaam)
+      );
+      this.post = this.fb.group({
+        beschrijving: ['', [Validators.required, Validators.minLength(2)]],
+        categorieNaam: ['', [Validators.required]],
+        fotos: this.fb.array([this.createFotos()])
+      });
     });
+    
+    
+   
   }
 
   getErrorMessage(errors: any): string {
@@ -81,6 +88,7 @@ export class AddPostComponent implements OnInit {
 
   uploadFotos(files: any): void {
     ///////File uploaden naar DB////////
+   // if(this.post.valid){
     let filesToUpload: File[] = files;
     const formData = new FormData();
 
@@ -100,5 +108,6 @@ export class AddPostComponent implements OnInit {
           this.message = 'Upload success.';
         }
       });
-  }
+  //}
+}
 }

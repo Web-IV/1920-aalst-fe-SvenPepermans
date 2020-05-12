@@ -17,8 +17,8 @@ export class UserDataService {
   }
 
   getCurrentUser$(): Observable<User>{
-      return this.http.get(`${environment.apiUrl}/gebruiker/`).pipe(
-          catchError(this.handleError),map(User.fromJSON)
+      return this.http.get<User>(`${environment.apiUrl}/gebruiker/`).pipe(
+          catchError(this.handleError)
       );
   }
 

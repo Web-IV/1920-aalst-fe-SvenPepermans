@@ -13,7 +13,7 @@ interface PostJson {
 export class Post {
   private _id: number;
   constructor(
-   // private _gebruiker: User,
+    private _gebruiker: User,
     private _beschrijving: string,
     private _categorieNaam: string,
     private _fotos = new Array<Foto>(),
@@ -21,9 +21,9 @@ export class Post {
     
   ) {}
 
-/*get gebruiker(): User{
+get gebruiker(): User{
   return this._gebruiker;
-}*/
+}
 
   get beschrijving(): string {
     return this._beschrijving;
@@ -44,7 +44,7 @@ export class Post {
   }
   static fromJSON(json: PostJson): Post {
     const pos = new Post(
-      //json.gebruiker,
+      json.gebruiker,
       json.beschrijving,
       json.categorieNaam,
       json.fotos.map(Foto.fromJSON),

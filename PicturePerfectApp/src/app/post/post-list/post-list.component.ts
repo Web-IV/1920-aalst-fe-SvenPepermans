@@ -34,7 +34,9 @@ export class PostListComponent implements OnInit {
       .subscribe(val => (this.filterPostBeschrijving = val));
   }
   get posts(): Post[] {
+    console.log(this._posts)
     return this._posts;
+    
   }
 
   applyFilter(filter: string) {
