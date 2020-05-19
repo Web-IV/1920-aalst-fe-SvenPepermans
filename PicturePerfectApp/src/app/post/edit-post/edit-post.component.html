@@ -1,0 +1,50 @@
+<mat-card>
+  <mat-card-title>Edit a post</mat-card-title>
+  <mat-card-content>
+    <form [formGroup]="edit" (ngSubmit)="onSubmit()">
+      <mat-form-field>
+        <input
+          matInput
+          aria-label="beschrijving"
+          type="text"
+          formControlName="beschrijving"
+          required
+        />
+
+        <mat-error
+          *ngIf="
+            edit.get('beschrijving')['errors'] &&
+            edit.get('beschrijving').touched
+          "
+        >
+          {{ getErrorMessage(edit.get("beschrijving")["errors"]) }}
+        </mat-error>
+      </mat-form-field>
+      <div>
+        <mat-form-field>
+          <input
+            matInput
+            aria-label="categorieNaam"
+            type="text"
+            formControlName="categorieNaam"
+            required
+          />
+
+          <mat-error
+            *ngIf="
+              edit.get('categorieNaam')['errors'] &&
+              edit.get('categorieNaam').touched
+            "
+          >
+            {{ getErrorMessage(edit.get("categorieNaam")["errors"]) }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div>
+        <button type="submit" mat-raised-button>
+          Edit post
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

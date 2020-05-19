@@ -1,6 +1,6 @@
 <mat-card>
   <mat-card-header>
-    <mat-card-title> {{ post.beschrijving }} </mat-card-title>
+    <mat-card-title> {{ post.gebruiker.gebruikersnaam }} </mat-card-title>
     <mat-card-subtitle
       >posted on {{ post.datePosted | date: "longDate" }}</mat-card-subtitle
     >
@@ -16,5 +16,6 @@
     <button (click)="deletePost()">
       <mat-icon>delete_forever</mat-icon>
     </button>
+    <button (click)="redirect('edit')">Edit this post</button>
   </mat-card-content>
 </mat-card>

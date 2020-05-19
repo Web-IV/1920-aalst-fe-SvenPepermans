@@ -18,12 +18,22 @@ export class Post {
     private _categorieNaam: string,
     private _fotos = new Array<Foto>(),
     private _datePosted = new Date()
-    
   ) {}
 
-get gebruiker(): User{
-  return this._gebruiker;
-}
+  get gebruiker(): User {
+    return this._gebruiker;
+  }
+
+  setBeschrijving(value: string) {
+    this._beschrijving = value;
+  }
+  setCategorieNaam(value: string) {
+    this._categorieNaam = value;
+  }
+  setFotos(fotos: Foto[]) {
+    this._fotos = fotos;
+  }
+  
 
   get beschrijving(): string {
     return this._beschrijving;
@@ -48,8 +58,7 @@ get gebruiker(): User{
       json.beschrijving,
       json.categorieNaam,
       json.fotos.map(Foto.fromJSON),
-      new Date(json.datePosted),
-      
+      new Date(json.datePosted)
     );
     pos._PostId = json.postId;
     return pos;
@@ -61,7 +70,7 @@ get gebruiker(): User{
       fotos: this.fotos.map(fot => fot.toJSON()),
       categorieNaam: this.categorieNaam,
       datePosted: this.datePosted.toString(),
-     // gebruiker: this.gebruiker
+      gebruiker: this.gebruiker
     };
   }
 }

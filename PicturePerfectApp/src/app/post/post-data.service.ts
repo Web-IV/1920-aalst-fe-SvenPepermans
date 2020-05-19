@@ -38,24 +38,34 @@ export class PostDataService {
     );
   }
 
-  getFoto$(id: string): Observable<Foto>{
+  getFoto$(id: string): Observable<Foto> {
     return this.http.get(`${environment.apiUrl}/fotos/${id}`).pipe(
       catchError(this.handleError),
       map(Foto.fromJSON)
     );
   }
-  deletePost(post: Post){
+  deletePost(post: Post) {
     return this.http
-    .delete(`${environment.apiUrl}/posts/${post.PostId}`)
-    .pipe(tap(console.log), catchError(this.handleError))
-    .subscribe(() => {
-      this._posts = this._posts.filter(pos => pos.PostId != post.PostId);
-      this._posts$.next(this._posts);
-    });
+      .delete(`${environment.apiUrl}/posts/${post.PostId}`)
+      .pipe(
+        tap(console.log),
+        catchError(this.handleError)
+      )
+      .subscribe(() => {
+        this._posts = this._posts.filter(pos => pos.PostId != post.PostId);
+        this._posts$.next(this._posts);
+      });
   }
 
-  
-  
+  editPost(post: Post) {
+    return this.http
+      .put(`${environment.apiUrl}/posts/${post.PostId}`, post)
+      .pipe(
+        catchError(this.handleError),
+        map(Post.fromJSON)
+      );
+  }
+
   handleError(err: any): Observable<never> {
     let errorMessage: string;
     if (err instanceof HttpErrorResponse) {
@@ -68,7 +78,7 @@ export class PostDataService {
   }
 
   addNewPost(post: Post) {
-    console.log(post)
+    console.log(post);
     return this.http
       .post(`${environment.apiUrl}/posts/`, post.toJSON())
       .pipe(

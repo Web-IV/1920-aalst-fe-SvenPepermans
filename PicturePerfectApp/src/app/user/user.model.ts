@@ -2,40 +2,40 @@ import { Foto } from './../post/foto.model';
 import { Post } from '../post/post.model';
 
 interface UserJson {
-  userId: number;
-  firstName: string;
-  lastName: string;
-  userName: string;
+  gebruikersId: number;
+  voornaam: string;
+  achternaam: string;
+  gebruikersnaam: string;
   email: string;
   posts: Post[];
   fotos: Foto[];
 }
 
 export class User {
-  private _userId: number;
+  private _gebruikersId: number;
   constructor(
-    private _firstName: string,
-    private _lastName: string,
-    private _userName: string,
+    private _voornaam: string,
+    private _achternaam: string,
+    private _gebruikersnaam: string,
     private _email: string,
     private _posts: Post[],
     private _fotos: Foto[]
   ) {}
 
-  get userId(): number {
-    return this._userId;
+  get gebruikersId(): number {
+    return this._gebruikersId;
   }
 
-  get firstName(): string {
-    return this._firstName;
+  get voornaam(): string {
+    return this._voornaam;
   }
 
-  get lastName(): string {
-    return this._lastName;
+  get achternaam(): string {
+    return this._achternaam;
   }
 
-  get userName(): string {
-    return this._userName;
+  get gebruikersnaam(): string {
+    return this._gebruikersnaam;
   }
 
   get email(): string {
@@ -52,14 +52,14 @@ export class User {
 
   static fromJSON(json: UserJson): User {
     const user = new User(
-      json.firstName,
-      json.lastName,
-      json.userName,
+      json.voornaam,
+      json.achternaam,
+      json.gebruikersnaam,
       json.email,
       json.posts,
       json.fotos
     );
-    user._userId = json.userId;
+    user._gebruikersId = json.gebruikersId;
     return user;
   }
 }
