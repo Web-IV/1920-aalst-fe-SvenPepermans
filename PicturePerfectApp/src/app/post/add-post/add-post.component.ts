@@ -14,7 +14,6 @@ import {
 import { PostDataService } from '../post-data.service';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { UserDataService } from '../../user/user-data.service';
-import { User } from '../../user/user.model';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -28,6 +27,7 @@ export class AddPostComponent implements OnInit {
   public message: string;
   public returnData: FormGroup;
   public auth: AuthenticationService;
+  public fotosObject: Foto[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -44,22 +44,25 @@ export class AddPostComponent implements OnInit {
     this.post = this.fb.group({
       beschrijving: ['', [Validators.required, Validators.minLength(2)]],
       categorieNaam: ['', [Validators.required]],
-      fotos: this.fb.array([this.createFotos()])
+      fotos: this.fb.array([])
     });
-    //this.fotos.valueChanges.pipe(distinctUntilChanged()).subscribe(fList => {
-    // this.fotos.push(this.createFotos());
-    //});
+    // this.fotos.valueChanges.pipe(distinctUntilChanged()).subscribe(fList => {
+    //  this.fotos.push(this.createFotos());
+    // });
   }
 
-  onSubmit() {
+  onSubmit(files: any) {
+    this.uploadFotos(files);
     this._userDataService.getCurrentUser$().subscribe(user => {
       this._postDataService.addNewPost(
         new Post(
           user,
           this.post.value.beschrijving,
-          this.post.value.categorieNaam
+          this.post.value.categorieNaam,
+          this.fotosObject
         )
       );
+
       this.post = this.fb.group({
         beschrijving: ['', [Validators.required, Validators.minLength(2)]],
         categorieNaam: ['', [Validators.required]]
@@ -76,15 +79,6 @@ export class AddPostComponent implements OnInit {
     }
   }
 
-  createFotos(): FormGroup {
-    //////////Foto omzetten naar klasse//////////
-    this.returnData = this.fb.group({
-      name: [''],
-      url: ['']
-    });
-    return this.returnData;
-  }
-
   uploadFotos(files: any): void {
     ///////File uploaden naar DB////////
     // if(this.post.valid){
@@ -92,6 +86,7 @@ export class AddPostComponent implements OnInit {
     const formData = new FormData();
 
     Array.from(filesToUpload).map((file, index) => {
+      this.fotosObject.push(new Foto(file.name, 'empty'));
       return formData.append('file' + index, file, file.name);
     });
 
@@ -107,6 +102,5 @@ export class AddPostComponent implements OnInit {
           this.message = 'Upload success.';
         }
       });
-    //}
   }
 }

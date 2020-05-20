@@ -10,6 +10,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     loadChildren: () => import('./post/post.module').then(mod => mod.PostModule)
   },
+  { path: '', redirectTo: 'post/home', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
 ];
 

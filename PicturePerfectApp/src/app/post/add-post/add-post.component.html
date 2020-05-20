@@ -1,7 +1,7 @@
 <mat-card>
   <mat-card-title>Add a post</mat-card-title>
   <mat-card-content>
-    <form [formGroup]="post" (ngSubmit)="onSubmit()">
+    <form [formGroup]="post" (ngSubmit)="onSubmit(file.files)">
       <mat-form-field>
         <input
           matInput
@@ -42,7 +42,24 @@
           </mat-error>
         </mat-form-field>
       </div>
-      
+      <div>
+        <div>
+          <input #file type="file" formControlName="fotos" multiple hidden />
+          <button
+            type="button"
+            class="mat-raised-button"
+            (click)="file.click()"
+          >
+            Upload file
+          </button>
+          <div>
+            <span class="upload" *ngIf="progress > 0"> {{ progress }}% </span>
+            <span class="upload" *ngIf="message">
+              {{ message }}
+            </span>
+          </div>
+        </div>
+      </div>
       <div>
         <button type="submit" mat-raised-button>
           Create post

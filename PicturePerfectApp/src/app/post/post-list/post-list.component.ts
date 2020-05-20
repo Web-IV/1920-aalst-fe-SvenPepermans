@@ -19,10 +19,11 @@ import {
   styleUrls: ['./post-list.component.css']
 })
 export class PostListComponent implements OnInit {
-  private _fetchPosts$: Observable<Post[]>;
-  public errorMessage: string = '';
   public filterPostBeschrijving: string = '';
+  private _fetchPosts$: Observable<Post[]>;
   public filterPost$ = new Subject<string>();
+
+  public errorMessage: string = '';
 
   constructor(
     private _postDataService: PostDataService,
@@ -36,7 +37,7 @@ export class PostListComponent implements OnInit {
       )
       .subscribe(val => {
         const params = val ? { queryParams: { filter: val } } : undefined;
-        this._router.navigate(['/posts/home'], params);
+        this._router.navigate(['/post/home'], params);
       });
 
     this._fetchPosts$ = this._route.queryParams
