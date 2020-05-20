@@ -13,9 +13,11 @@
         <img [src]="sanitize(foto.url)" height="50" width="50" />
       </mat-list-item>
     </mat-list>
-    <button (click)="deletePost()">
+    <button class="button" (click)="deletePost()">
       <mat-icon>delete_forever</mat-icon>
     </button>
-    <button (click)="redirect('edit')">Edit this post</button>
+    <button class="button" (click)="redirect('edit')">
+      <mat-icon>create</mat-icon>
+    </button>
   </mat-card-content>
 </mat-card>
