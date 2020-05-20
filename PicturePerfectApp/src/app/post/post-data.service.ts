@@ -1,7 +1,11 @@
-import { map, tap, delay, catchError } from 'rxjs/operators';
+import { map, tap, delay, catchError, switchMap } from 'rxjs/operators';
 import { Post } from './post.model';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpParams
+} from '@angular/common/http';
 import { Observable, throwError, of, BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Foto } from './foto.model';
@@ -10,18 +14,30 @@ import { Foto } from './foto.model';
   providedIn: 'root'
 })
 export class PostDataService {
-  private _posts$ = new BehaviorSubject<Post[]>([]);
-  private _posts: Post[];
+  private _reloadPosts$ = new BehaviorSubject<boolean>(true);
 
-  constructor(private http: HttpClient) {
-    this.posts$.subscribe((posts: Post[]) => {
-      this._posts = posts;
-      this._posts$.next(this._posts);
-    });
+  constructor(private http: HttpClient) {}
+
+  //get allPosts$(): Observable<Post[]> { return this._posts$;}
+
+  getPosts$(beschrijving?: string, categorieNaam?: string) {
+    return this._reloadPosts$.pipe(
+      switchMap(() => this.fetchRecipes$(beschrijving, categorieNaam))
+    );
   }
 
-  get allPosts$(): Observable<Post[]> {
-    return this._posts$;
+  fetchRecipes$(beschrijving?: string, categorieNaam?: string) {
+    let params = new HttpParams();
+    params = beschrijving
+      ? params.append('beschrijving', beschrijving)
+      : params;
+    params = categorieNaam
+      ? params.append('categorieNaam', categorieNaam)
+      : params;
+    return this.http.get(`${environment.apiUrl}/posts/`, { params }).pipe(
+      catchError(this.handleError),
+      map((list: any[]): Post[] => list.map(Post.fromJSON))
+    );
   }
 
   get posts$(): Observable<Post[]> {
@@ -52,8 +68,7 @@ export class PostDataService {
         catchError(this.handleError)
       )
       .subscribe(() => {
-        this._posts = this._posts.filter(pos => pos.PostId != post.PostId);
-        this._posts$.next(this._posts);
+        this._reloadPosts$.next(true);
       });
   }
 
@@ -61,9 +76,12 @@ export class PostDataService {
     return this.http
       .put(`${environment.apiUrl}/posts/${post.PostId}`, post)
       .pipe(
-        catchError(this.handleError),
-        map(Post.fromJSON)
-      );
+        tap(console.log),
+        catchError(this.handleError)
+      )
+      .subscribe(() => {
+        this._reloadPosts$.next(true);
+      });
   }
 
   handleError(err: any): Observable<never> {
@@ -85,9 +103,13 @@ export class PostDataService {
         catchError(this.handleError),
         map(Post.fromJSON)
       )
-      .subscribe((pos: Post) => {
-        this._posts = [...this._posts, pos];
-        this._posts$.next(this._posts);
-      });
+      .pipe(
+        catchError(err => {
+          return throwError(err);
+        }),
+        tap((pos: Post) => {
+          this._reloadPosts$.next(true);
+        })
+      );
   }
 }

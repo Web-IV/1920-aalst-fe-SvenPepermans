@@ -46,27 +46,26 @@ export class AddPostComponent implements OnInit {
       categorieNaam: ['', [Validators.required]],
       fotos: this.fb.array([this.createFotos()])
     });
-
-    this.fotos.valueChanges.pipe(distinctUntilChanged()).subscribe(fList => {
-      this.fotos.push(this.createFotos());
-    });
+    //this.fotos.valueChanges.pipe(distinctUntilChanged()).subscribe(fList => {
+    // this.fotos.push(this.createFotos());
+    //});
   }
 
   onSubmit() {
-    let fotos = this.post.value.fotos.map(Foto.fromJSON);
     this._userDataService.getCurrentUser$().subscribe(user => {
       this._postDataService.addNewPost(
-        new Post(user, this.post.value.beschrijving, this.post.value.categorieNaam)
+        new Post(
+          user,
+          this.post.value.beschrijving,
+          this.post.value.categorieNaam
+        )
       );
       this.post = this.fb.group({
         beschrijving: ['', [Validators.required, Validators.minLength(2)]],
-        categorieNaam: ['', [Validators.required]],
-        fotos: this.fb.array([this.createFotos()])
+        categorieNaam: ['', [Validators.required]]
+        //fotos: this.fb.array([this.createFotos()])
       });
     });
-    
-    
-   
   }
 
   getErrorMessage(errors: any): string {
@@ -88,7 +87,7 @@ export class AddPostComponent implements OnInit {
 
   uploadFotos(files: any): void {
     ///////File uploaden naar DB////////
-   // if(this.post.valid){
+    // if(this.post.valid){
     let filesToUpload: File[] = files;
     const formData = new FormData();
 
@@ -108,6 +107,6 @@ export class AddPostComponent implements OnInit {
           this.message = 'Upload success.';
         }
       });
-  //}
-}
+    //}
+  }
 }

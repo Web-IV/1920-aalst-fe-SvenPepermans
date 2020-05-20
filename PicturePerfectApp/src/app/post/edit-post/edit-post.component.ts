@@ -1,6 +1,6 @@
 import { UserDataService } from './../../user/user-data.service';
 import { PostDataService } from './../post-data.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Post } from './../post.model';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -17,7 +17,8 @@ export class EditPostComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private _postDataService: PostDataService
+    private _postDataService: PostDataService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -34,9 +35,10 @@ export class EditPostComponent implements OnInit {
   onSubmit() {
     this.post.setBeschrijving(this.edit.value.beschrijving);
     this.post.setCategorieNaam(this.edit.value.categorieNaam);
-    //this.post.setFotos(this.post.fotos);
+    this.post.setFotos([]);
     console.log(this.post);
     this._postDataService.editPost(this.post);
+    this.router.navigate(['/post/home']);
   }
 
   getErrorMessage(errors: any): string {
@@ -46,4 +48,6 @@ export class EditPostComponent implements OnInit {
       return `needs at least ${errors.minlength.requiredLength} charactes (got ${errors.minlength.actualLength})`;
     }
   }
+
+  
 }

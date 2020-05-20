@@ -33,7 +33,6 @@ export class Post {
   setFotos(fotos: Foto[]) {
     this._fotos = fotos;
   }
-  
 
   get beschrijving(): string {
     return this._beschrijving;
@@ -69,8 +68,9 @@ export class Post {
       beschrijving: this.beschrijving,
       fotos: this.fotos.map(fot => fot.toJSON()),
       categorieNaam: this.categorieNaam,
-      datePosted: this.datePosted.toString(),
-      gebruiker: this.gebruiker
+      datePosted: this.datePosted.toJSON(),
+      gebruiker: this.gebruiker,
+      postId: this.PostId
     };
   }
 }

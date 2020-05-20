@@ -1,4 +1,4 @@
-<div fxLayout="column" fxLayoutGap="2%"> 
+<div fxLayout="column" fxLayoutGap="2%">
   <mat-card>
     <mat-form-field>
       <input
@@ -6,6 +6,8 @@
         (keyup)="filterPost$.next($event.target.value)"
         placeholder="filteren"
         type="filter post description..."
+        data-cy="filterInput"
+        [value]="filterPostBeschrijving"
       />
     </mat-form-field>
   </mat-card>
@@ -21,9 +23,10 @@
     >
       <div
         class="post"
-        *ngFor="let post of posts$ | async | postFilter: filterPostBeschrijving"
+        *ngFor="let post of posts"
         fxFlex="0 0 calc(25%-0.5%)"
         fxFlex.xs="100%"
+        data-cy="postList"
       >
         <app-post [post]="post"></app-post>
       </div>

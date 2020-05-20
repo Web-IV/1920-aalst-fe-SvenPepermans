@@ -42,26 +42,9 @@
           </mat-error>
         </mat-form-field>
       </div>
+      
       <div>
-        <div>
-          <input #file type="file" formControlName="fotos" multiple hidden />
-          <button
-            type="button"
-            class="mat-raised-button"
-            (click)="file.click()"
-          >
-            Upload file
-          </button>
-          <div>
-            <span class="upload" *ngIf="progress > 0"> {{ progress }}% </span>
-            <span class="upload" *ngIf="message">
-              {{ message }}
-            </span>
-          </div>
-        </div>
-      </div>
-      <div>
-        <button type="submit" (click)="uploadFotos(file.files)"mat-raised-button>
+        <button type="submit" mat-raised-button>
           Create post
         </button>
       </div>
