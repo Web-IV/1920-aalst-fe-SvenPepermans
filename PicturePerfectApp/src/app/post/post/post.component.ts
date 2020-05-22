@@ -50,15 +50,18 @@ export class PostComponent implements OnInit {
     this._postDataService.editPost(this.post);
   }
 
-  compareUsers(): boolean{
-    var returnvalue;
-    this._userDataService.getCurrentUser$().pipe(
-      map(user => this.currentUserId = user.gebruikersId))
-      
+  usersAreEqual(): boolean{
     
-    returnvalue = this.currentUserId == this.post.gebruiker.gebruikersId ;
- 
-  console.log(returnvalue)
-  return returnvalue;
+    this._userDataService.getCurrentUser$().subscribe(user => {
+      this.currentUserId = user.gebruikersId
+      
+    })
+    
+    
+    
+ console.log("current" + this.currentUserId);
+ console.log(this.post.gebruiker.gebruikersId);
+  
+  return this.currentUserId == this.post.gebruiker.gebruikersId;
   }
 }

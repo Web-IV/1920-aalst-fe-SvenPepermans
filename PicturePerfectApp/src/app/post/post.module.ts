@@ -4,7 +4,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { PostFilterPipe } from './post-filter.pipe';
 import { MaterialModule } from './../material/material.module';
 import { PostComponent } from './post/post.component';
-import { FotoComponent } from './foto/foto.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PostListComponent } from './post-list/post-list.component';
@@ -43,7 +42,6 @@ const postRoutes: Routes = [
 @NgModule({
   declarations: [
     PostComponent,
-    FotoComponent,
     PostListComponent,
     AddPostComponent,
     PostFilterPipe,

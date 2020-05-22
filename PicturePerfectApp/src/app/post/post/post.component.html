@@ -27,7 +27,7 @@
       </div>
 
       <mat-card-actions>
-        <div *ngIf="compareUsers() == false">
+        <div *ngIf="usersAreEqual()">
           <button class="button" (click)="deletePost()">
             <mat-icon>delete_forever</mat-icon>
           </button>
@@ -35,7 +35,7 @@
             <mat-icon>create</mat-icon>
           </button>
         </div>
-        <div *ngIf="compareUsers() == true">
+        <div *ngIf="usersAreEqual() == false">
           <button
             class="button"
             (click)="like()"
