@@ -15,6 +15,7 @@ import { PostDataService } from '../post-data.service';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { UserDataService } from '../../user/user-data.service';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-post',
@@ -33,7 +34,8 @@ export class AddPostComponent implements OnInit {
     private fb: FormBuilder,
     private http: HttpClient,
     private _postDataService: PostDataService,
-    private _userDataService: UserDataService
+    private _userDataService: UserDataService,
+    private _router: Router
   ) {}
 
   get fotos(): FormArray {
@@ -54,7 +56,7 @@ export class AddPostComponent implements OnInit {
   onSubmit(files: any) {
     this.uploadFotos(files);
     this._userDataService.getCurrentUser$().subscribe(user => {
-      this._postDataService.addNewPost(       
+      this._postDataService.addNewPost(
         new Post(
           user,
           this.post.value.beschrijving,
@@ -69,6 +71,7 @@ export class AddPostComponent implements OnInit {
         //fotos: this.fb.array([this.createFotos()])
       });
     });
+    this._router.navigate(['/post/home']);
   }
 
   getErrorMessage(errors: any): string {

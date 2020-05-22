@@ -5,6 +5,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { UserDataService } from '../../user/user-data.service';
 
+
 @Component({
   selector: 'app-post',
   templateUrl: './post.component.html',
@@ -12,18 +13,22 @@ import { UserDataService } from '../../user/user-data.service';
 })
 export class PostComponent implements OnInit {
   @Input() public post: Post;
-  images = this.post.fotos;
+ images: any[];
   loggedInUser$ = this._userDataService.getCurrentUser$();
   constructor(
     private sanitizer: DomSanitizer,
     private _postDataService: PostDataService,
     private _userDataService: UserDataService,
     private router: Router
-  ) {}
+  ) {
+    
+  }
 
   ngOnInit(): void {
     console.log(this.post);
-    console.log(this.images);
+    this.images = this.post.fotos.map(foto => foto.base64);
+    console.log(this.images[0]);
+  
   }
 
   sanitize(url: string) {

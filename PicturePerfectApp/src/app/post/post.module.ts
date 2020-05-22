@@ -14,7 +14,7 @@ import { PostResolver } from './PostResolver';
 import { EditPostComponent } from './edit-post/edit-post.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserPostsResolver } from './UserPostsResolver';
-import { NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 const postRoutes: Routes = [
   { path: 'home', component: PostListComponent },
@@ -56,7 +56,7 @@ const postRoutes: Routes = [
     CommonModule,
     MaterialModule,
     ReactiveFormsModule,
-    NgbCarousel,
+    NgbModule,
     RouterModule.forChild(postRoutes)
   ],
   exports: [AddPostComponent, PostListComponent, ProfileComponent]

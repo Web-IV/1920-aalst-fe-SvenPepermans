@@ -12,16 +12,18 @@
       {{ post.beschrijving }}
       <h3 mat-subheader></h3>
       <div class="content-alignment">
-        <ngb-carousel *ngIf ="images">
-          <div *ngFor="let foto of post.fotos">
-          <ng-template ngbSlide>
+        <ngb-carousel>
+          
+          <ng-template ngbSlide *ngFor="let foto of images">
+           <div style="padding-top: 3em">
             <img
               class="img-content"
               mat-card-image
-              [src]="sanitize(foto.base64)"
+              [src]="sanitize(foto)"
+              alt = "niks te zien"
             />
-          </ng-template>
-        </div>
+          </div> 
+          </ng-template>       
         </ngb-carousel>
       </div>
 

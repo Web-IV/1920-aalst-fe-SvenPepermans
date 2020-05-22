@@ -1,4 +1,4 @@
-<div fxLayout="column" fxLayoutGap="2%">
+<div style="text-align: center;" fxLayout="column" fxLayoutGap="2%">
   <mat-card>
     <mat-form-field>
       <input
@@ -27,8 +27,9 @@
         fxFlex="0 0 calc(25%-0.5%)"
         fxFlex.xs="100%"
         data-cy="postList"
+        style="align-content: center;"
       >
-        <app-post [post]="post" data-cy="postCard"></app-post>
+        <app-post style="text-align: left;"[post]="post" data-cy="postCard"></app-post>
       </div>
     </div>
   </div>
