@@ -1,0 +1,18 @@
+[{
+    "PostId": 2,
+        "beschrijving": "fietsen",
+        "gebruiker": {
+            "gebruikersId": 1,
+            "voornaam": "Sven",
+            "achternaam": "Pepermans",
+            "gebruikersnaam": "SvenP",
+            "email": "svenp@gmail.com"
+        },
+        "categorieNaam": "sport",
+        "datePosted": "2020-03-13T12:40:03.184905",
+        "fotos": [{
+            "naam": "fiets.jpg",
+            "url": "C:\\Users\\svenp\\Documents\\GitHub1920-aalst-be-SvenPepermans\\PicturePerfectAPI\\PicturePerfectAPI\\Resources\\Images\\fiets.jpg",
+            "base64": "eenbase64"
+        }]
+}]

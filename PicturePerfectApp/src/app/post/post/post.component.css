@@ -1,0 +1,11 @@
+.content-alignment{
+    text-align: center;
+}
+
+.img-content{
+    object-fit: cover !important; 
+    height:fit-content !important; 
+    width: 90% !important;           
+    border-style: solid !important;
+    border: gray;
+}

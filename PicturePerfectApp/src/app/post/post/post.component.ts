@@ -12,6 +12,7 @@ import { UserDataService } from '../../user/user-data.service';
 })
 export class PostComponent implements OnInit {
   @Input() public post: Post;
+  images = this.post.fotos;
   loggedInUser$ = this._userDataService.getCurrentUser$();
   constructor(
     private sanitizer: DomSanitizer,
@@ -22,6 +23,7 @@ export class PostComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.post);
+    console.log(this.images);
   }
 
   sanitize(url: string) {
@@ -34,5 +36,8 @@ export class PostComponent implements OnInit {
     console.log(this.post);
     this.router.navigate(['/post/' + pagename + '/' + this.post.PostId]);
   }
+
+  
+  
   
 }

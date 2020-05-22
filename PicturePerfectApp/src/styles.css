@@ -6,3 +6,8 @@
   border: none;
   padding: 10px;
 }
+
+html,
+body {
+  height: 100%;
+}
