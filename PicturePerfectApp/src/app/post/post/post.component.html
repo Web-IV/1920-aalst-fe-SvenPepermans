@@ -27,19 +27,23 @@
       </div>
 
       <mat-card-actions>
-        <button class="button" (click)="deletePost()">
-          <mat-icon>delete_forever</mat-icon>
-        </button>
-        <button class="button" (click)="redirect('edit')">
-          <mat-icon>create</mat-icon>
-        </button>
-        <button
-          class="button"
-          (click)="like()"
-          [disabled]="likeButtonDisabled"
-        >
-          <mat-icon>thumb_up</mat-icon>
-        </button>
+        <div *ngIf="compareUsers() == false">
+          <button class="button" (click)="deletePost()">
+            <mat-icon>delete_forever</mat-icon>
+          </button>
+          <button class="button" (click)="redirect('edit')">
+            <mat-icon>create</mat-icon>
+          </button>
+        </div>
+        <div *ngIf="compareUsers() == true">
+          <button
+            class="button"
+            (click)="like()"
+            [disabled]="likeButtonDisabled"
+          >
+            <mat-icon>thumb_up</mat-icon>
+          </button>
+        </div>
       </mat-card-actions>
     </mat-card-content>
   </div>
