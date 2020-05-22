@@ -9,6 +9,7 @@ import {
 import { Observable, throwError, of, BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Foto } from './foto.model';
+import { User } from '../user/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -33,11 +34,26 @@ export class PostDataService {
   }
 
   getPosts$(beschrijving?: string, categorieNaam?: string) {
-    return this._reloadPosts$.pipe(switchMap(() => this.fetchPosts$(beschrijving, categorieNaam))
+    return this._reloadPosts$.pipe(
+      switchMap(() => this.fetchPosts$(beschrijving, categorieNaam))
     );
   }
 
-    fetchPosts$(beschrijving?: string, categorieNaam?: string) {
+  getPostsFromUser$(user: User) {
+   return this._reloadPosts$.pipe(
+     switchMap(() => this.fetchPostsFromUser$(user))
+   );
+  }
+
+  fetchPostsFromUser$(user: User): Observable<Post[]>{
+    return this.http
+    .get(`${environment.apiUrl}/posts/posts/${user.gebruikersId}`)
+    .pipe(
+      catchError(this.handleError),
+      map((list: any[]): Post[] => list.map(Post.fromJSON))
+    );
+  }
+  fetchPosts$(beschrijving?: string, categorieNaam?: string) {
     let params = new HttpParams();
     params = beschrijving
       ? params.append('beschrijving', beschrijving)
@@ -98,8 +114,7 @@ export class PostDataService {
         map(Post.fromJSON)
       )
       .subscribe((pos: Post) => {
-          this._reloadPosts$.next(true);
-        })
-      
+        this._reloadPosts$.next(true);
+      });
   }
 }

@@ -57,7 +57,8 @@ export class User {
       json.gebruikersnaam,
       json.email,
       json.posts,
-      json.fotos
+      json.fotos,
+      
     );
     user._gebruikersId = json.gebruikersId;
     return user;

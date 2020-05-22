@@ -1,3 +1,4 @@
+import { ProfileComponent } from './profile/profile.component';
 import { Routes, RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PostFilterPipe } from './post-filter.pipe';
@@ -11,6 +12,8 @@ import { AddPostComponent } from './add-post/add-post.component';
 import { PostDetailComponent } from './post-detail/post-detail.component';
 import { PostResolver } from './PostResolver';
 import { EditPostComponent } from './edit-post/edit-post.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { UserPostsResolver } from './UserPostsResolver';
 
 const postRoutes: Routes = [
   { path: 'home', component: PostListComponent },
@@ -21,9 +24,18 @@ const postRoutes: Routes = [
     resolve: { post: PostResolver }
   },
   {
+    path: 'gebruiker/:gebruikersNaam',
+    component: UserProfileComponent,
+    resolve: {userPosts: UserPostsResolver}
+  },
+  {
     path: 'edit/:id',
     component: EditPostComponent,
     resolve: { post: PostResolver }
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent
   }
 ];
 
@@ -35,7 +47,9 @@ const postRoutes: Routes = [
     AddPostComponent,
     PostFilterPipe,
     PostDetailComponent,
-    EditPostComponent
+    EditPostComponent,
+    ProfileComponent,
+    UserProfileComponent
   ],
   imports: [
     CommonModule,
@@ -43,6 +57,6 @@ const postRoutes: Routes = [
     ReactiveFormsModule,
     RouterModule.forChild(postRoutes)
   ],
-  exports: [AddPostComponent, PostListComponent]
+  exports: [AddPostComponent, PostListComponent, ProfileComponent]
 })
 export class PostModule {}

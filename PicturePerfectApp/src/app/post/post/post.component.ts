@@ -3,6 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Post } from '../post.model';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { UserDataService } from '../../user/user-data.service';
 
 @Component({
   selector: 'app-post',
@@ -11,9 +12,11 @@ import { Router } from '@angular/router';
 })
 export class PostComponent implements OnInit {
   @Input() public post: Post;
+  loggedInUser$ = this._userDataService.getCurrentUser$();
   constructor(
     private sanitizer: DomSanitizer,
     private _postDataService: PostDataService,
+    private _userDataService: UserDataService,
     private router: Router
   ) {}
 
@@ -31,4 +34,5 @@ export class PostComponent implements OnInit {
     console.log(this.post);
     this.router.navigate(['/post/' + pagename + '/' + this.post.PostId]);
   }
+  
 }

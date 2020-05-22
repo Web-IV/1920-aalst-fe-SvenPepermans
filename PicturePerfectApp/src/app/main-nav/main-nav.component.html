@@ -11,6 +11,20 @@
     <mat-nav-list>
       <a mat-list-item [routerLink]="['post/home']">Home</a>
       <a mat-list-item [routerLink]="['post/add']">Add</a>
+      <a mat-list-item [routerLink]="['post/profile']">Profile</a>
+      <mat-form-field>
+        <mat-label>Search users</mat-label>
+        <mat-select 
+        formControlName="search"
+        (selectionChange) = "selected($event)"
+        >
+          <input (keyup)="onKey($event.target.value)" />
+          <mat-option></mat-option>
+          <mat-option #matOption *ngFor="let user of selectedUsers" [value]="user">{{
+            user
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

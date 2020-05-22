@@ -10,9 +10,10 @@
     <h3 mat-subheader></h3>
     <mat-list>
       <mat-list-item *ngFor="let foto of post.fotos">
-        <img [src]="sanitize(foto.url)" height="50" width="50" />
+        <img [src]="sanitize(foto.base64)" height="200" width="200" />
       </mat-list-item>
     </mat-list>
+
     <button class="button" (click)="deletePost()">
       <mat-icon>delete_forever</mat-icon>
     </button>

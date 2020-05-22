@@ -54,7 +54,7 @@ export class AddPostComponent implements OnInit {
   onSubmit(files: any) {
     this.uploadFotos(files);
     this._userDataService.getCurrentUser$().subscribe(user => {
-      this._postDataService.addNewPost(
+      this._postDataService.addNewPost(       
         new Post(
           user,
           this.post.value.beschrijving,
@@ -86,7 +86,7 @@ export class AddPostComponent implements OnInit {
     const formData = new FormData();
 
     Array.from(filesToUpload).map((file, index) => {
-      this.fotosObject.push(new Foto(file.name, 'empty'));
+      this.fotosObject.push(new Foto(file.name, 'empty', 'empty'));
       return formData.append('file' + index, file, file.name);
     });
 
