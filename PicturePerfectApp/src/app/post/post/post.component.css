@@ -3,8 +3,8 @@
 }
 
 .img-content{
-    object-fit: cover !important; 
-    height:fit-content !important; 
+   /* object-fit: cover !important; */
+    height:100% !important; 
     width: 90% !important;           
     border-style: solid !important;
     border: gray;

@@ -40,18 +40,18 @@ export class PostDataService {
   }
 
   getPostsFromUser$(user: User) {
-   return this._reloadPosts$.pipe(
-     switchMap(() => this.fetchPostsFromUser$(user))
-   );
+    return this._reloadPosts$.pipe(
+      switchMap(() => this.fetchPostsFromUser$(user))
+    );
   }
 
-  fetchPostsFromUser$(user: User): Observable<Post[]>{
+  fetchPostsFromUser$(user: User): Observable<Post[]> {
     return this.http
-    .get(`${environment.apiUrl}/posts/posts/${user.gebruikersId}`)
-    .pipe(
-      catchError(this.handleError),
-      map((list: any[]): Post[] => list.map(Post.fromJSON))
-    );
+      .get(`${environment.apiUrl}/posts/posts/${user.gebruikersId}`)
+      .pipe(
+        catchError(this.handleError),
+        map((list: any[]): Post[] => list.map(Post.fromJSON))
+      );
   }
   fetchPosts$(beschrijving?: string, categorieNaam?: string) {
     let params = new HttpParams();
@@ -86,12 +86,14 @@ export class PostDataService {
   }
 
   editPost(post: Post) {
+    console.log(post);
     return this.http
       .put(`${environment.apiUrl}/posts/${post.PostId}`, post)
       .pipe(
         catchError(this.handleError),
         map(Post.fromJSON)
-      );
+      )
+      .subscribe();
   }
 
   handleError(err: any): Observable<never> {

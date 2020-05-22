@@ -10,20 +10,19 @@
   <div>
     <mat-card-content>
       {{ post.beschrijving }}
-      <h3 mat-subheader></h3>
+      <h3 mat-subheader>{{ post.likes }}</h3>
       <div class="content-alignment">
         <ngb-carousel>
-          
           <ng-template ngbSlide *ngFor="let foto of images">
-           <div style="padding-top: 3em">
-            <img
-              class="img-content"
-              mat-card-image
-              [src]="sanitize(foto)"
-              alt = "niks te zien"
-            />
-          </div> 
-          </ng-template>       
+            <div style="padding-top: 3em">
+              <img
+                class="img-content"
+                mat-card-image
+                [src]="sanitize(foto)"
+                alt="niks te zien"
+              />
+            </div>
+          </ng-template>
         </ngb-carousel>
       </div>
 
@@ -33,6 +32,13 @@
         </button>
         <button class="button" (click)="redirect('edit')">
           <mat-icon>create</mat-icon>
+        </button>
+        <button
+          class="button"
+          (click)="like()"
+          [disabled]="likeButtonDisabled"
+        >
+          <mat-icon>thumb_up</mat-icon>
         </button>
       </mat-card-actions>
     </mat-card-content>

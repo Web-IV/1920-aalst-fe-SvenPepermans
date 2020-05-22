@@ -61,7 +61,8 @@ export class AddPostComponent implements OnInit {
           user,
           this.post.value.beschrijving,
           this.post.value.categorieNaam,
-          this.fotosObject
+          this.fotosObject,
+          0
         )
       );
 

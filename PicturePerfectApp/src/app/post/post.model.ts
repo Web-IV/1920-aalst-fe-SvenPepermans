@@ -8,6 +8,7 @@ interface PostJson {
   categorieNaam: string;
   datePosted: string;
   gebruiker: User;
+  likes: number;
 }
 
 export class Post {
@@ -17,13 +18,18 @@ export class Post {
     private _beschrijving: string,
     private _categorieNaam: string,
     private _fotos = new Array<Foto>(),
+    private _likes: number,
     private _datePosted = new Date()
+    
   ) {}
 
   get gebruiker(): User {
     return this._gebruiker;
   }
 
+  get likes(): number{
+    return this._likes;
+  }
   setBeschrijving(value: string) {
     this._beschrijving = value;
   }
@@ -31,7 +37,11 @@ export class Post {
     this._categorieNaam = value;
   }
   setFotos(fotos: Foto[]) {
-    this._fotos = fotos;
+    this._fotos = fotos.length == 0 ? this._fotos : this._fotos.concat(fotos);
+  }
+
+  setLikes(value: number){
+    this._likes += value;
   }
 
   get beschrijving(): string {
@@ -56,7 +66,8 @@ export class Post {
       json.gebruiker,
       json.beschrijving,
       json.categorieNaam,
-      json.fotos.map(Foto.fromJSON),
+      json.fotos.map(Foto.fromJSON),    
+      json.likes,
       new Date(json.datePosted)
     );
     pos._PostId = json.postId;
@@ -70,7 +81,9 @@ export class Post {
       categorieNaam: this.categorieNaam,
       datePosted: this.datePosted.toJSON(),
       gebruiker: this.gebruiker,
-      postId: this.PostId
+      postId: this.PostId,
+      likes: this.likes
+
     };
   }
 }
