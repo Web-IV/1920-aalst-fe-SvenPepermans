@@ -37,7 +37,7 @@ describe("Post List tests", function() {
   it("delete while showing", () => {
     cy.server();
 
-    // add a recipe using a direct request
+    // add a post using a direct request
     cy.request({
       method: "POST",
       url: "/api/posts",
@@ -62,7 +62,7 @@ describe("Post List tests", function() {
         bearer: localStorage.getItem("currentUser")
       }
     }).then(postJson => {
-      // check we have two before we start
+      // check we have 1 before we start
       cy.visit("/");
       cy.get("[data-cy=filterInput]").type("wan");
       cy.wait(300);
